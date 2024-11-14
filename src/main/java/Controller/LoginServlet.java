@@ -5,6 +5,7 @@ package Controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
+import dao.TaiKhoanDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import model.TaiKhoan;
 
 /**
  *
@@ -37,7 +39,10 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username"); 
         String password = request.getParameter("password");
         //b2. Xác thực thông tin
-        if(username.equalsIgnoreCase("admin") && password.equals("admin"))//thành công 
+        TaiKhoanDAO tkDAO = new TaiKhoanDAO();
+        TaiKhoan tk = tkDAO.checklogin(username, password);
+
+        if(tk!=null)//thành công 
                 {
             //Lưu thông tin lịch sử(tài khoản ác thực thành công)
             HttpSession session = request.getSession();
